@@ -1,0 +1,125 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: todoアプリ
+  description: Todoアプリもどき
+
+paths:
+  /todos/{id}:
+    get:
+      operationId: getTodo
+      summary: Get todo note by id
+      parameters:
+        - name: id
+          in: path
+          description: TodoのID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Unknown error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnknownError'
+    put:
+      operationId: updateTodo
+      parameters:
+        - name: id
+          in: path
+          description: TodoのID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      summary: Update todo note
+      requestBody:
+        description: Todo note
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TodoResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Unknown error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnknownError'
+components:
+  schemas:
+    UnknownError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+    NotFoundError:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+
+    TodoRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        is_completed:
+          type: boolean
+      required:
+        - title
+        - is_completed
+
+    TodoResponse:
+      allOf:
+        - $ref: '#/components/schemas/TodoRequest'
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            created_at:
+              type: string
+            updated_at:
+              type: string
+          required:
+            - id
+            - created_at
+            - updated_at

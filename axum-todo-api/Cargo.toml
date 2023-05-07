@@ -1,0 +1,76 @@
+[package]
+name = "axum-todo-api"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+#
+# axum
+# tokio
+#
+# メイン用途
+# - Webフレームワーク(axum)
+#
+# サブ用途
+# - 非同期処理(tokio)
+#
+# 概要
+# - tokio
+#     - 非同期処理のデファクト
+# - axum
+#     - tokioチームが作るWebフレームワーク
+#
+axum = "0.6.18"
+tokio = { version = "1", features = ["full"] }
+
+#
+# serde
+# serde_json
+#
+# メイン用途
+# - シリアライズ(rust → json)
+# - デシリアライズ(json → rust)
+#
+# サブ用途
+# - 特になし
+#
+# 概要
+# - serde/serde_json
+#     - JSONを扱う場合のデファクト
+#
+serde = { version = "1.0.162", features = ["derive"] }
+serde_json = "1.0.96"
+
+#
+# chrono
+# chrono_tz
+#
+# メイン用途
+# - 現在時刻取得
+#
+# サブ用途
+# - 時刻のタイムゾーン変換
+#
+# 概要
+# - chrono
+#     - 時刻を扱う場合のデファクト
+# - chrono_tz
+#     - 日本時間に変換する時に利用
+#
+chrono = { version = "0.4.24", features = ["serde"] }
+chrono-tz = "0.8.2"
+
+#
+# tower-http
+#
+# メイン用途
+# - CORS(Cross-Origin Request Shareing)リクエストのため
+#     - 異なるOriginからのリクエストをコントロールするため
+#
+# サブ用途
+# - 特になし
+#
+# 概要
+# - tower-http のミドルウェアの1つ
+#
+tower-http = { version = "0.4.0", features = ["cors"] }
